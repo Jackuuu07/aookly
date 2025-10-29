@@ -6,20 +6,29 @@ import Main_front from "./components/Main Page/Main_front";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) setIsLoggedIn(true);
+    const userData = localStorage.getItem("user");
+
+    if (token && userData) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(userData));
+    }
   }, []);
 
   const handleLoginSuccess = () => {
-    console.log("🎉 Login success callback triggered!");
+    const userData = localStorage.getItem("user");
+    setUser(userData ? JSON.parse(userData) : null);
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setIsLoggedIn(false);
+    setUser(null);
   };
 
   return (
@@ -27,7 +36,7 @@ function App() {
       {!isLoggedIn && <img src={rocket} alt="App Logo" className="app-logo" />}
 
       {isLoggedIn ? (
-        <Main_front onLogout={handleLogout} />
+        <Main_front onLogout={handleLogout} user={user} />  //{/* ✅ Pass user */}
       ) : (
         <Login onLoginSuccess={handleLoginSuccess} />
       )}

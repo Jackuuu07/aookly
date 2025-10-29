@@ -1,29 +1,10 @@
 #root {
-  max-width: 1500px;
-  margin: 0 auto;
-  text-align: center;
-}
-/* ===== Top-Left Global Logo ===== */
-/* ===== Responsive Top-Left Global Logo ===== */
-.app-logo {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 25vw;            /* ✅ responsive width: 25% of viewport width */
-  max-width: 400px;       /* ✅ never exceed 400px */
-  min-width: 120px;       /* ✅ never get too small */
-  height: auto;
-  z-index: 1000;
-  user-select: none;
-  outline: none;          /* ✅ remove focus outline */
-  border: none;           /* ✅ ensure no borders appear */
-  display: block;         /* ✅ removes inline baseline dotted artifacts */
-  pointer-events: none;   /* ✅ optional: makes it non-interactive */
-}
-
-@media (max-width: 600px) {
-  .app-logo {
-    top: 0px;
-    width: 35vw;
-  }
+  width: 100vw;           /* full viewport width */
+  height: 100vh;          /* full viewport height */
+  margin: 0;              /* remove default margins */
+  padding: 0;             /* remove inner spacing */
+  overflow: hidden;       /* prevent any scrollbars */
+  display: flex;          /* useful for layout alignment */
+  flex-direction: column; /* stack children vertically */
+  box-sizing: border-box; /* include padding/border in total size */
 }

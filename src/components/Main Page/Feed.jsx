@@ -1,108 +1,231 @@
 import React, { useEffect, useState } from "react";
 import { FiSearch, FiSettings } from "react-icons/fi";
 import { FaPenToSquare } from "react-icons/fa6";
-import "../../styles/Feed_chat.css"; // 👈 make sure path is correct
+import "../../styles/Feed_chat.css";
 
-const Feed = () => {
-  const [posts, setPosts] = useState([]);
+const Feed = ({ user }) => {
+  const [feedData, setFeedData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const loggedInUser = user || JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
 
-  // ✅ Fetch feed data from API
+  // ✅ Fetch personalized feed
   useEffect(() => {
     const fetchFeed = async () => {
-      try {
-        const response = await fetch("https://aookly.onrender.com/posts/feed?page=1");
-        const result = await response.json();
-        console.log("✅ API Response:", result);
+      if (!loggedInUser || !token) {
+        console.warn("⚠️ User not logged in or token missing");
+        setLoading(false);
+        return;
+      }
 
-        // ✅ Correct structure
-        if (result.status && Array.isArray(result.data)) {
-          setPosts(result.data);
+      try {
+        const res = await fetch(
+          `https://aookly.onrender.com/posts/feed?page=1&user_id=${loggedInUser.user_id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await res.json();
+        console.log("✅ API Response:", data);
+
+        if (res.status === 401 || data.message === "Access denied") {
+          console.error("❌ Unauthorized: Invalid or expired token");
+          alert("Session expired. Please log in again.");
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          window.location.reload();
+          return;
+        }
+
+        if (data?.status && Array.isArray(data.data)) {
+          setFeedData(data.data);
         } else {
           console.warn("⚠️ No valid data array found in API response");
-          setPosts([]);
+          setFeedData([]);
         }
-      } catch (error) {
-        console.error("❌ Error fetching feed:", error);
-        setPosts([]);
+      } catch (err) {
+        console.error("❌ Fetch error:", err);
+        setFeedData([]);
       } finally {
         setLoading(false);
       }
     };
 
     fetchFeed();
-  }, []);
+  }, [loggedInUser, token]);
 
+  // 💖 Handle like toggle (instant UI update)
+  const handleLike = (postId) => {
+    setFeedData((prevData) =>
+      prevData.map((post) =>
+        post.post_id === postId
+          ? {
+              ...post,
+              is_liked: !post.is_liked,
+              like_count: post.is_liked
+                ? Number(post.like_count) - 1
+                : Number(post.like_count) + 1,
+            }
+          : post
+      )
+    );
+  };
+
+  // 💬 Handle comment click
+  const handleComment = (postId) => {
+    alert(`🗨️ Comment feature coming soon for Post ID: ${postId}`);
+  };
+
+  // 🧑 Example users for chat sidebar
   const users = [
     { name: "Anushka Sharma", online: true },
     { name: "Smriti Mandhana", online: true },
     { name: "MS Dhoni", online: false },
     { name: "Hardik Pandya", online: true },
-    { name: "Ellyse Perry", online: false },
-    { name: "Shubman Gill", online: true },
-    { name: "KL Rahul", online: true },
   ];
+
+  if (loading) return <p>Loading feed...</p>;
 
   return (
     <div className="feed-section">
-      {/* ================= LEFT: Dynamic Feed ================= */}
-      <div className="feed">
-        {loading ? (
-          <p>Loading posts...</p>
-        ) : posts.length > 0 ? (
-          posts.map((post) => (
-            <div className="post" key={post.post_id}>
-              {/* ---- Post Header ---- */}
-              <div className="post-header">
-                <img
-                  src={
-                    post.profile_image ||
-                    "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                  }
-                  alt={post.username}
-                  className="profile-pic"
-                />
-                <div className="user-info">
-                  <h4>{post.username}</h4>
-                  {post.tagline && <p className="tagline">{post.tagline}</p>}
-                </div>
-              </div>
+      {/* ================= LEFT SIDE: Feed + Create Post ================= */}
+      <div className="feed-container">
+        {/* ===== CREATE POST CARD ===== */}
+        <div className="create-post-card">
+          <div className="create-post-header">
+            <img
+              src={
+                loggedInUser?.profile_image ||
+                "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              }
+              alt="Profile"
+              className="create-profile-img"
+            />
+            <textarea
+              className="create-caption"
+              placeholder="What's on your mind?"
+              rows="2"
+            />
+          </div>
 
-              {/* ---- Post Media ---- */}
-              {post.media_url && (
-                post.media_url.endsWith(".mp4") ||
-                post.media_url.endsWith(".mov") ? (
-                  <video controls className="post-media">
-                    <source src={post.media_url} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                ) : (
+          <div className="create-media-section">
+            <label htmlFor="fileInput" className="upload-label">
+              📸 Add Photo/Video
+            </label>
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*,video/*"
+              className="hidden-input"
+            />
+            <button className="post-btn">Post</button>
+          </div>
+
+          
+        </div>
+
+        {/* ===== FEED ===== */}
+        <div className="feed">
+          {feedData.length > 0 ? (
+            feedData.map((post) => (
+              <div key={post.post_id} className="feed-card">
+                {/* ==== Header (Profile + Username + Premium Tag) ==== */}
+                <div className="feed-header">
                   <img
-                    src={post.media_url}
-                    alt="Post media"
-                    className="post-media"
+                    src={
+                      post.profile_image ||
+                      loggedInUser?.profile_image ||
+                      "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                    }
+                    alt={post.username}
+                    className="feed-profile-img"
                   />
-                )
-              )}
+                  <div className="feed-user-info">
+                    <div className="feed-username">
+                      <span>{post.username}</span>
+                      {post.is_premium && (
+                        <span className="premium-tag">Premium</span>
+                      )}
+                    </div>
+                    {post.tagline && (
+                      <p className="feed-tagline">{post.tagline}</p>
+                    )}
+                  </div>
+                </div>
 
-              {/* ---- Post Description ---- */}
-              {post.description && (
-                <p className="post-description">{post.description}</p>
-              )}
+                {/* ==== Media Section ==== */}
+                <div className="feed-media">
+                  {post.media_url &&
+                  (post.media_url.endsWith(".mp4") ||
+                    post.media_url.endsWith(".mov")) ? (
+                    <video controls className="feed-video">
+                      <source src={post.media_url} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : (
+                    post.media_url && (
+                      <img
+                        src={post.media_url}
+                        alt="Post media"
+                        className="feed-image"
+                      />
+                    )
+                  )}
+                </div>
 
-              {/* ---- Post Actions ---- */}
-              <div className="post-actions">
-                <span>❤️ {post.like_count}</span>
-                <span>💬 {post.comment_count}</span>
+                {/* ==== Description ==== */}
+                {post.description && (
+                  <p className="feed-description">{post.description}</p>
+                )}
+
+                {/* ==== Interaction Bar ==== */}
+                <div className="feed-actions">
+                  <button
+                    className={`like-btn ${post.is_liked ? "liked" : ""}`}
+                    onClick={() => handleLike(post.post_id)}
+                  >
+                    {post.is_liked ? "❤️" : "🤍"} {post.like_count}
+                  </button>
+
+                  <button
+                    className="comment-btn"
+                    onClick={() => handleComment(post.post_id)}
+                  >
+                    💬 {post.comment_count}
+                  </button>
+                </div>
+
+                {/* ==== Last Liked User ==== */}
+                {post.last_liked_user && (
+                  <div className="feed-last-liked">
+                    <img
+                      src={
+                        post.last_liked_user.profile_image ||
+                        "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                      }
+                      alt={post.last_liked_user.username}
+                      className="last-liked-img"
+                    />
+                    <p>
+                      Liked by <b>{post.last_liked_user.username}</b> and{" "}
+                      <b>{Math.max(0, post.like_count - 1)}</b> others
+                    </p>
+                  </div>
+                )}
               </div>
-            </div>
-          ))
-        ) : (
-          <p>No posts found.</p>
-        )}
+            ))
+          ) : (
+            <p>No posts found for {loggedInUser?.username || "this user"}.</p>
+          )}
+        </div>
       </div>
 
-      {/* ================= RIGHT: Chat List ================= */}
+      {/* ================= RIGHT: Chat Sidebar ================= */}
       <div className="chat-list">
         <div className="chat-header">
           <h3>Chat</h3>
@@ -112,13 +235,13 @@ const Feed = () => {
           </div>
         </div>
 
-        {users.map((user, index) => (
+        {users.map((chatUser, index) => (
           <div className="chat-user" key={index}>
             <div className="avatar-container">
-              <div className="avatar">{user.name.charAt(0)}</div>
-              {user.online && <span className="online-dot"></span>}
+              <div className="avatar">{chatUser.name.charAt(0)}</div>
+              {chatUser.online && <span className="online-dot"></span>}
             </div>
-            <span>{user.name}</span>
+            <span>{chatUser.name}</span>
           </div>
         ))}
 

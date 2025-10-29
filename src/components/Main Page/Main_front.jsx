@@ -7,15 +7,14 @@ import "../../styles/Sidebar.css";
 import Searchbar from "./Searchbar";
 import "../../styles/Feed_chat.css";
 
-const Main_Front = ({ onLogout }) => {
+const Main_Front = ({ onLogout, user }) => {
   return (
     <div className="main-front">
       <Sidebar />
       <div className="main-content">
-        {/* ✅ Pass logout handler down */}
         <Searchbar onLogout={onLogout} />
         <Topbar />
-        <Feed />
+        <Feed user={user} /> {/* ✅ Pass user to feed */}
       </div>
     </div>
   );

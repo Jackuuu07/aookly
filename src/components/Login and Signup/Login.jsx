@@ -2,7 +2,7 @@ import React from "react";
 import "../../styles/Login.css";
 import { useState } from "react";
 
-const Login = ({onLoginSuccess}) => {
+const Login = ({ onLoginSuccess }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -26,26 +26,15 @@ const Login = ({onLoginSuccess}) => {
                 body: JSON.stringify({ email, password }),
             });
 
-            const data = await response.json();
+            const result = await response.json();
 
-            if (!response.ok) {
-                throw new Error(data.message || "Login failed");
+            if (response.ok && result.status === true) {
+                localStorage.setItem("token", result.token);
+                localStorage.setItem("user", JSON.stringify(result.user));
+                onLoginSuccess(); // Switch to Main_Front view
+            } else {
+                alert(result.message || "Invalid login credentials");
             }
-
-            // ✅ Save token if returned
-            if (data.token) {
-                localStorage.setItem("token", data.token);
-                onLoginSuccess(); // ✅ tell parent App.jsx to switch to main page
-
-            }
-
-            setSuccess("✅ Login successful!");
-            setEmail("");
-            setPassword("");
-
-            // Optional redirect
-            // window.location.href = "/dashboard";
-
         } catch (err) {
             setError(err.message || "Something went wrong");
         } finally {
