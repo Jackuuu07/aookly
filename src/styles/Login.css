@@ -1,0 +1,278 @@
+/* ===== Overall Layout ===== */
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff;
+  width: 100%;
+  align-items: stretch;
+  position: relative;
+}
+
+/* ===== Left Section ===== */
+.left-section {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px;
+  position: relative;
+}
+
+
+
+
+
+
+.tagline {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.info-text {
+  max-width: 400px;
+  color: #374151;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.link {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.hashtags {
+  color: #6b7280;
+  margin-top: 20px;
+}
+
+/* ===== Right Section ===== */
+.right-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  background: white;
+}
+
+.login-card {
+  width: 100%;
+  width: 450px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgb(108, 75, 75);
+  padding: 40px 45px;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.login-subtitle {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+/* ===== Form ===== */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+input {
+  padding: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+input:focus {
+  border-color: #2563eb;
+}
+
+/* === Password Field Wrapper === */
+.password-field {
+  position: relative;
+  width: 100%; /* make sure it matches other inputs */
+}
+
+/* === Password Input === */
+.password-field input {
+  width: 100%;
+  padding-right: 40px; /* space for the eye icon */
+  box-sizing: border-box; /* ensures padding doesn’t shrink width */
+  padding: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.password-field input:focus {
+  border-color: #2563eb;
+}
+
+/* === Eye Icon === */
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 37%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #9ca3af;
+  font-size: 18px;
+  user-select: none;
+  line-height: 1;
+}
+
+.eye-icon:hover {
+  color: #2563eb;
+}
+
+/* ===== Links & Buttons ===== */
+.forgot-password {
+  text-align: right;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.forgot-password a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.login-btn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.register-text {
+  text-align: center;
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 15px;
+}
+
+.register-link {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 900px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .left-section {
+    padding: 20px;
+    order: 1;
+  }
+
+  .right-section {
+    order: 2;
+    background-color: white;
+    padding: 20px;
+  }
+
+  .login-card {
+    box-shadow: none;
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .logo {
+    font-size: 36px;
+  }
+
+  .rocket-img {
+    width: 80px;
+  }
+
+  .info-text {
+    font-size: 14px;
+  }
+
+  .login-title {
+    font-size: 22px;
+  }
+
+  .login-subtitle {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .left-section,
+  .right-section {
+    flex: none;
+    width: 100%;
+    padding: 15px;
+  }
+
+  .login-card {
+    max-width: 100%;
+    box-shadow: none;
+    border: none;
+  }
+
+  .login-title {
+    font-size: 20px;
+  }
+
+  .logo {
+    font-size: 32px;
+  }
+
+  .rocket-img {
+    width: 70px;
+  }
+
+  input {
+    font-size: 13px;
+  }
+}

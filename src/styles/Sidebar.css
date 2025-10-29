@@ -1,0 +1,135 @@
+/* --------------------------------------------------- Sidebar ------------------------------------------------ */
+
+/* Sidebar container */
+.sidebar {
+  width: 248px;
+  background: #fff;
+  border-right: none;
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+
+  /* soft right-side shadow separator */
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.05);
+  z-index: 2;
+}
+
+/* brand/logo */
+.sidebar-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 8px;
+  padding-top: 12px;
+}
+
+.brand {
+  font-size: 20px;
+  color: black;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+/* nav list */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* each pill item */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  padding: 10px 14px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 160ms ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08); /* subtle shadow */
+  font-size: 15px;
+  color: black;
+  font-weight: 550;
+  
+}
+
+/* icon styling */
+.sidebar-item .icon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f6f8ff, #ffffff);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  font-size: 18px;
+  color: black;
+}
+
+/* label text */
+.sidebar-item .label {
+  flex: 1;
+  text-align: left;
+}
+
+/* hover effect */
+.sidebar-item:hover {
+    transform: translateY(-2px);
+  background: #ffffff;
+}
+
+/* active item */
+.sidebar-item.active {
+  position: relative;
+  background: #f8faff;
+  border: 1px solid black;
+    }
+
+/* small blue left indicator */
+.sidebar-item.active::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 8px;
+  bottom: 8px;
+  width: 5px;
+  background: linear-gradient(180deg, #2f2f2f, #2f2f2f);
+  border-radius: 50px;
+}
+
+/* active icon styling */
+.sidebar-item.active .icon {
+  background: linear-gradient(180deg, #eaf2ff, #ffffff);
+  color: black;
+}
+
+/* responsive fallback (small screens) */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 70px;
+    padding: 14px 8px;
+  }
+
+  .sidebar .label {
+    display: none;
+  }
+
+  .sidebar-item {
+    justify-content: center;
+    padding: 10px 6px;
+  }
+
+  .sidebar-item .icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand {
+    display: none;
+  }
+}
