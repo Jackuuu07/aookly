@@ -235,15 +235,15 @@ const Feed = ({ user }) => {
           </div>
         </div>
 
-        {users.map((chatUser, index) => (
-          <div className="chat-user" key={index}>
-            <div className="avatar-container">
-              <div className="avatar">{chatUser.name.charAt(0)}</div>
-              {chatUser.online && <span className="online-dot"></span>}
+          {users.map((chatUser, index) => (
+            <div className="chat-user" key={index}>
+              <div className="avatar-container">
+                <div className="custom-avatar">{chatUser.name.charAt(0)}</div>
+                {chatUser.online && <span className="online-dot"></span>}
+              </div>
+              <span>{chatUser.name}</span>
             </div>
-            <span>{chatUser.name}</span>
-          </div>
-        ))}
+          ))}
 
         <button className="new-message-btn">
           <FaPenToSquare />
