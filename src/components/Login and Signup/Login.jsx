@@ -71,7 +71,6 @@ const Login = ({ onLoginSuccess }) => {
                 </svg>
 
 
-                <p className="tagline">another place to humblebrag</p>
                 <p className="info-text">
                     A new wave in professional networking is on its way,{" "}
                     <a href="#" className="link">
