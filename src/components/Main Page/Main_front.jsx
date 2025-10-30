@@ -19,5 +19,5 @@ const Main_Front = ({ onLogout, user }) => {
     </div>
   );
 };
-
+  
 export default Main_Front;

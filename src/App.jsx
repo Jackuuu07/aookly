@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import rocket from "./assets/rocket.svg";
+import rocket from "./assets/rocket1.png";
 import Login from "./components/Login and Signup/Login";
 import Main_front from "./components/Main Page/Main_front";
+import Profile from "./components/Profile Page/Profile";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,16 +33,21 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      {!isLoggedIn && <img src={rocket} alt="App Logo" className="app-logo" />}
+  <div className="app-container">
+    {!isLoggedIn && (
+      <div className="logo-container">
+        <img src={rocket} alt="App Logo" className="app-logo" />
+      </div>
+    )}
 
-      {isLoggedIn ? (
-        <Main_front onLogout={handleLogout} user={user} />  //{/* ✅ Pass user */}
-      ) : (
-        <Login onLoginSuccess={handleLoginSuccess} />
-      )}
-    </div>
-  );
+    {isLoggedIn ? (
+      <Main_front onLogout={handleLogout} user={user} /> //✅ Pass user
+    ) : (
+      <Login onLoginSuccess={handleLoginSuccess} />
+    )}
+  </div>
+);
+
 }
 
 export default App;

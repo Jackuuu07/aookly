@@ -8,3 +8,26 @@
   flex-direction: column; /* stack children vertically */
   box-sizing: border-box; /* include padding/border in total size */
 }
+
+/* === Logo in Top-Left Corner === */
+.logo-container {
+  position: fixed;       /* Stays fixed on top even when scrolling */
+  top: -45px;
+  left: -1px;
+  z-index: 1000;         /* Ensures it stays above everything */
+}
+
+.app-logo {
+  width: 500px;           /* Fixed size for the logo */
+  height: 500px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .app-logo {
+    width: 45px;
+    height: 45px;
+  }
+}
+
