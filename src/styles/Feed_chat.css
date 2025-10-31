@@ -342,9 +342,11 @@
 
 /* ======================== FLOATING BUTTON ======================== */
 .new-message-btn {
+  bottom: 20px;
+  right: 20px;
   width: 60px;
   height: 60px;
-  background: #007bff;
+  background: black;
   color: #fff;
   border: none;
   border-radius: 50%;

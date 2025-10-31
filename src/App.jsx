@@ -8,6 +8,7 @@ import Profile from "./components/Profile Page/Profile";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [activePage, setActivePage] = useState("main"); // ✅ "main" or "profile"
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -32,22 +33,41 @@ function App() {
     setUser(null);
   };
 
+  // ✅ Switch between Main and Profile pages
+  const handleOpenProfile = () => setActivePage("profile");
+  const handleBackToMain = () => setActivePage("main");
+
   return (
-  <div className="app-container">
-    {!isLoggedIn && (
-      <div className="logo-container">
-        <img src={rocket} alt="App Logo" className="app-logo" />
-      </div>
-    )}
+    <div className="app-container">
+      {!isLoggedIn && (
+        <div className="logo-container">
+          <img src={rocket} alt="App Logo" className="app-logo" />
+        </div>
+      )}
 
-    {isLoggedIn ? (
-      <Main_front onLogout={handleLogout} user={user} /> //✅ Pass user
-    ) : (
-      <Login onLoginSuccess={handleLoginSuccess} />
-    )}
-  </div>
-);
+      {isLoggedIn ? (
+        <>
+          {activePage === "main" && (
+            <Main_front
+              onLogout={handleLogout}
+              user={user}
+              onOpenProfile={handleOpenProfile} // ✅ Open profile when icon clicked
+            />
+          )}
 
+          {activePage === "profile" && (
+            <Profile
+              onLogout={handleLogout}
+              user={user}
+              onBack={handleBackToMain} // ✅ Back to main feed
+            />
+          )}
+        </>
+      ) : (
+        <Login onLoginSuccess={handleLoginSuccess} />
+      )}
+    </div>
+  );
 }
 
 export default App;

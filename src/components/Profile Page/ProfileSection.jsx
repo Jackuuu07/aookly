@@ -1,81 +1,78 @@
 import React from "react";
 import "../../styles/Profile page/ProfileSection.css";
+import {
+  FaBriefcase,
+  FaMapMarkerAlt,
+  FaLink,
+  FaBuilding,
+  FaInfoCircle,
+  FaQuestionCircle,
+  FaShieldAlt,
+  FaFileContract,
+  FaShareAlt,
+  FaStar,
+} from "react-icons/fa";
 
-const ProfileSection = () => {
+const ProfilePage = () => {
   return (
-    <div className="profile-section">
-      {/* ===== Cover Section ===== */}
-      <div className="profile-cover">
-        <img
-          src="https://images.unsplash.com/photo-1503264116251-35a269479413"
-          alt="cover"
-          className="cover-img"
-        />
-        <div className="edit-cover">
-          <i className="fa fa-camera"></i>
-        </div>
-      </div>
-
-      {/* ===== Profile Header ===== */}
+    <div className="profile-page">
+      {/* ===== Profile Header (Cover + Info) ===== */}
       <div className="profile-header">
-        <div className="profile-image">
+        <div className="profile-cover">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
-            alt="profile"
-            className="avatar"
+            src="https://images.unsplash.com/photo-1503264116251-35a269479413"
+            alt="cover"
+            className="cover-img"
           />
-          <div className="edit-avatar">
-            <i className="fa fa-camera"></i>
-          </div>
         </div>
 
         <div className="profile-info">
-          <h2 className="name">Name</h2>
+          <div className="profile-avatar">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+              alt="avatar"
+            />
+          </div>
+          <h2>Name</h2>
           <p className="role">Software developer</p>
-          <p className="bio">
-            sdsfsdfffffffffffffffffffffffffffffffffffffffffffffffffffffszdcsdfsdfsd
+          <p className="desc">
+            sdfsdfllllllllllllllllllllllllllllllllllllllsdcsdfsdfsdfsdf
           </p>
 
           <div className="connections">
-            <span>10k followers</span> • <span>22 Professional connections</span>
+            <span>10k followers</span>
+            <span>22 Professional connections</span>
           </div>
 
-          <div className="profile-buttons">
-            <button className="add-btn">Add connection</button>
-            <button className="following-btn">✓ Following</button>
-            <button className="more-btn">⋯</button>
+          <div className="profile-actions">
+            <button className="btn add">Add connection</button>
+            <button className="btn following">✓ Following</button>
+            <button className="btn more">⋯</button>
           </div>
+        </div>
+      </div>
+
+      {/* ===== Details Section ===== */}
+      <div className="profile-section-1">
+        <h3>Details</h3>
+        <div className="card-grid">
+          <div className="card"><FaBriefcase /> Profession</div>
+          <div className="card"><FaMapMarkerAlt /> Location</div>
+          <div className="card"><FaLink /> Link</div>
+          <div className="card"><FaBuilding /> Add your company / business profile</div>
         </div>
       </div>
 
       {/* ===== Preferences Section ===== */}
-      <div className="preferences">
+      <div className="profile-section-2">
         <h3>Preferences</h3>
-        <div className="pref-grid">
-          <div className="pref-item">
-            <i className="fa fa-info-circle"></i>
-            <span>About us</span>
-          </div>
-          <div className="pref-item">
-            <i className="fa fa-question-circle"></i>
-            <span>Help & support</span>
-          </div>
-          <div className="pref-item">
-            <i className="fa fa-lock"></i>
-            <span>Privacy & Policies</span>
-          </div>
-          <div className="pref-item">
-            <i className="fa fa-file-text"></i>
-            <span>Terms & Condition</span>
-          </div>
-          <div className="pref-item">
-            <i className="fa fa-share-alt"></i>
-            <span>Share app</span>
-          </div>
-          <div className="pref-item">
-            <i className="fa fa-star"></i>
-            <span>Rate us</span>
-          </div>
+        <div className="card-grid">
+          <div className="card"><FaInfoCircle /> About us</div>
+          <div className="card"><FaQuestionCircle /> Help & support</div>
+          <div className="card"><FaShieldAlt /> Privacy & Policies</div>
+          <div className="card"><FaFileContract /> Terms & Condition</div>
+          <div className="card"><FaShareAlt /> Share app</div>
+          <div className="card"><FaStar /> Rate us</div>
         </div>
       </div>
 
@@ -88,4 +85,4 @@ const ProfileSection = () => {
   );
 };
 
-export default ProfileSection;
+export default ProfilePage;

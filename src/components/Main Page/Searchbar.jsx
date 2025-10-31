@@ -5,20 +5,21 @@ import { IoNotificationsCircle } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import "../../styles/Searcbar.css";
 
-const Searchbar = ({ onLogout }) => {
+const Searchbar = ({ onLogout, onOpenProfile }) => {
   return (
     <div className="search-container">
       <input type="text" placeholder="Explore" className="search-input" />
 
       <div className="search-buttons">
         <button className="search-button">
-          <MdAccountCircle />
-        </button>
-        <button className="search-button">
           <IoNotificationsCircle />
         </button>
 
-        {/* ✅ Logout button calls parent's logout handler */}
+        {/* ✅ Opens Profile page */}
+        <button className="search-button" onClick={onOpenProfile}>
+          <MdAccountCircle />
+        </button>
+
         <button className="search-button" onClick={onLogout}>
           <IoIosLogOut />
         </button>

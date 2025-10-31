@@ -4,6 +4,7 @@ import ProfileSection from "./ProfileSection";
 import "../../styles/Profile page/Profile.css";
 import "../../styles/Sidebar.css";
 import "../../styles/Searcbar.css";
+import Topbar from "../Main Page/Topbar";
 
 const Profile = () => {
     return (
@@ -11,6 +12,7 @@ const Profile = () => {
             <Sidebar />
             <div className="profile-content">
                 <Searchbar />
+                <Topbar />
                 <ProfileSection />
             </div>
         </div>

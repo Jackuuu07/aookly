@@ -7,12 +7,12 @@ import "../../styles/Sidebar.css";
 import Searchbar from "./Searchbar";
 import "../../styles/Feed_chat.css";
 
-const Main_Front = ({ onLogout, user }) => {
+const Main_Front = ({ onLogout, user, onOpenProfile }) => {
   return (
     <div className="main-front">
       <Sidebar />
       <div className="main-content">
-        <Searchbar onLogout={onLogout} />
+        <Searchbar onLogout={onLogout} onOpenProfile={onOpenProfile} />
         <Topbar />
         <Feed user={user} /> {/* ✅ Pass user to feed */}
       </div>
