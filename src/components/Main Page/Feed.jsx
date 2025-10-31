@@ -178,10 +178,7 @@ const Feed = ({ user }) => {
                   )}
                 </div>
 
-                {/* ==== Description ==== */}
-                {post.description && (
-                  <p className="feed-description">{post.description}</p>
-                )}
+                
 
                 {/* ==== Interaction Bar ==== */}
                 <div className="feed-actions">
@@ -216,6 +213,10 @@ const Feed = ({ user }) => {
                       <b>{Math.max(0, post.like_count - 1)}</b> others
                     </p>
                   </div>
+                )}
+                {/* ==== Description ==== */}
+                {post.description && (
+                  <p className="feed-description">{post.description}</p>
                 )}
               </div>
             ))

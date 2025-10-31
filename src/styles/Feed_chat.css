@@ -204,6 +204,7 @@
 
 /* ======================== DESCRIPTION ======================== */
 .feed-description {
+  padding: 15px;
   font-size: 0.95rem;
   color: #333;
   line-height: 1.6;
@@ -213,19 +214,25 @@
 /* ======================== ACTION BAR ======================== */
 .feed-actions {
   display: flex;
-  gap: 20px;
+  gap: 1px;
   margin-top: 14px;
   align-items: center;
 }
-
 .feed-actions button {
+  margin-left: 10px;
   background: none;
-  border: none;
-  font-size: 1.1rem;
   cursor: pointer;
   color: #555;
   transition: all 0.2s ease;
+  border: none;             /* 🔹 Removes default button border */
+  outline: none;            /* 🔹 Removes focus outline */
 }
+
+.feed-actions button:focus {
+  outline: none;            /* Ensures no border on click or keyboard focus */
+  box-shadow: none;         /* Removes any default focus glow (e.g. Safari/Chrome) */
+}
+
 
 .feed-actions button:hover {
   transform: scale(1.1);
@@ -241,9 +248,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: -10px;
   background: #f9fafc;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 10px;
 }
 

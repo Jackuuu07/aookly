@@ -23,6 +23,7 @@
   gap: 10px;
   padding-bottom: 8px;
   padding-top: 12px;
+  cursor: pointer;
 }
 
 .brand {
@@ -89,18 +90,6 @@
   background: #f8faff;
   border: 1px solid black;
     }
-
-/* small blue left indicator */
-.sidebar-item.active::before {
-  content: "";
-  position: absolute;
-  left: -10px;
-  top: 8px;
-  bottom: 8px;
-  width: 5px;
-  background: linear-gradient(180deg, #2f2f2f, #2f2f2f);
-  border-radius: 50px;
-}
 
 /* active icon styling */
 .sidebar-item.active .icon {

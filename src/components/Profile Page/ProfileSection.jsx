@@ -1,22 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../styles/Profile page/ProfileSection.css";
-import {
-  FaBriefcase,
-  FaMapMarkerAlt,
-  FaLink,
-  FaBuilding,
-  FaInfoCircle,
-  FaQuestionCircle,
-  FaShieldAlt,
-  FaFileContract,
-  FaShareAlt,
-  FaStar,
-} from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
+import { GoDot } from "react-icons/go";
+import post1 from "../../assets/Post.png";
+import post2 from "../../assets/flag.jpg";
+import logo from "../../assets/exp-logo.jpg";
 
 const ProfilePage = () => {
+  const [isExpanded, setIsExpanded] = useState(false);       // About expand
+  const [isExpExpanded, setIsExpExpanded] = useState(false); // Experience expand
+  const [isFeedExpanded, setIsFeedExpanded] = useState(false); // Feed expand
+
+  // Dummy feed posts
+  const feedPosts = [
+    {
+      id: 1,
+      title: "Swadeshi India",
+      logo: post2,
+      image: post1,
+      likes: 1139,
+      comments: 58,
+      caption:
+        "Liked by Amit Shah and 25,513 others. Swadeshi India: The Swadeshi Movement began in 1905, during India's freedom struggle...",
+    },
+    {
+      id: 2,
+      title: "Make in India",
+      logo: post2,
+      image: post1,
+      likes: 854,
+      comments: 33,
+      caption:
+        "Encouraging domestic production and innovation for India's growth...",
+    },
+    {
+      id: 3,
+      title: "Digital Bharat",
+      logo: post2,
+      image: post1,
+      likes: 1423,
+      comments: 97,
+      caption:
+        "Empowering citizens with technology and digital services across rural India...",
+    },
+    {
+      id: 4,
+      title: "Startup India",
+      logo: post2,
+      image: post1,
+      likes: 2450,
+      comments: 112,
+      caption:
+        "Boosting entrepreneurship and innovation through Startup India programs...",
+    },
+  ];
+
+  const visiblePosts = isFeedExpanded ? feedPosts : feedPosts.slice(0, 2);
+
   return (
     <div className="profile-page">
-      {/* ===== Profile Header (Cover + Info) ===== */}
+      {/* ====================== Profile Header (Cover + Info) ====================== */}
       <div className="profile-header">
         <div className="profile-cover">
           <img
@@ -34,9 +77,10 @@ const ProfilePage = () => {
             />
           </div>
           <h2>Name</h2>
-          <p className="role">Software developer</p>
+          <p className="role">Software Developer</p>
           <p className="desc">
-            sdfsdfllllllllllllllllllllllllllllllllllllllsdcsdfsdfsdfsdf
+            Passionate software engineer focused on building responsive web
+            applications and scalable backend systems.
           </p>
 
           <div className="connections">
@@ -52,34 +96,100 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* ===== Details Section ===== */}
-      <div className="profile-section-1">
-        <h3>Details</h3>
-        <div className="card-grid">
-          <div className="card"><FaBriefcase /> Profession</div>
-          <div className="card"><FaMapMarkerAlt /> Location</div>
-          <div className="card"><FaLink /> Link</div>
-          <div className="card"><FaBuilding /> Add your company / business profile</div>
+      {/* ===================== About + Experience ====================== */}
+      <div className="about-exp-container">
+        {/* ====================== About Section ====================== */}
+        <div className={`about-box ${isExpanded ? "expanded" : ""}`}>
+          <h3>About</h3>
+          <p>
+            Our goal is simple – making our customers' financial portfolios look
+            good while providing optimal services. Check out our LinkedIn to
+            learn more about us! We believe in innovation, teamwork, and
+            delivering top-notch performance to every client, ensuring growth
+            and reliability in every step of collaboration.
+          </p>
+          <div className="about-actions">
+            <button
+              className="show-btn"
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
+              {isExpanded ? "Show less ↑" : "Show all details →"}
+            </button>
+          </div>
+        </div>
+
+        {/* ====================== Experience Section ====================== */}
+        <div className={`experience-box ${isExpExpanded ? "expanded" : ""}`}>
+          <div className="exp-header">
+            <h3>Experience</h3>
+            <FaPlus className="plus-icon" />
+          </div>
+
+          {[1, 2, 3, 4, 5].map((_, index) => (
+            <div className="exp-item" key={index}>
+              <div className="exp-item-logo">
+                <img src={logo} alt="logo" />
+              </div>
+              <div className="exp-item-infomation">
+                <p className="position">Position (Title)</p>
+                <p className="company">Company Name</p>
+                <p className="date">Start date – End date · Your experience</p>
+              </div>
+            </div>
+          ))}
+
+          <div className="exp-actions">
+            <button
+              className="show-btn"
+              onClick={() => setIsExpExpanded(!isExpExpanded)}
+            >
+              {isExpExpanded ? "Show less ↑" : "Show all details →"}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* ===== Preferences Section ===== */}
-      <div className="profile-section-2">
-        <h3>Preferences</h3>
-        <div className="card-grid">
-          <div className="card"><FaInfoCircle /> About us</div>
-          <div className="card"><FaQuestionCircle /> Help & support</div>
-          <div className="card"><FaShieldAlt /> Privacy & Policies</div>
-          <div className="card"><FaFileContract /> Terms & Condition</div>
-          <div className="card"><FaShareAlt /> Share app</div>
-          <div className="card"><FaStar /> Rate us</div>
-        </div>
-      </div>
+      {/* ====================== Feed Section ====================== */}
+      <div className={`feed-container-1 ${isFeedExpanded ? "expanded" : ""}`}>
+        <h3>Feed</h3>
 
-      {/* ===== Bottom Buttons ===== */}
-      <div className="bottom-buttons">
-        <button className="delete-btn">Delete Account</button>
-        <button className="logout-btn">Log out</button>
+        <div className="feed-grid">
+          {visiblePosts.map((post) => (
+            <div key={post.id} className="feed-card">
+              <div className="feed-header">
+                <img src={post.logo} alt={post.title} className="feed-logo" />
+                <div>
+                  <h4>{post.title}</h4>
+                </div>
+              </div>
+
+              <img src={post.image} alt={post.title} className="feed-image" />
+
+              <div className="feed-actions-1">
+                <span>❤️ {post.likes}</span>
+                <span>💬 {post.comments}</span>
+                <span>↗️ Share</span>
+              </div>
+
+              <p className="feed-caption-1">{post.caption}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="feed-doted-item">
+          <p>
+            <GoDot /> <GoDot /> <GoDot /> <GoDot /> <GoDot /> <GoDot />
+          </p>
+        </div>
+
+        <div className="feed-actions-show-btn">
+          <button
+            className="show-btn"
+            onClick={() => setIsFeedExpanded(!isFeedExpanded)}
+          >
+            {isFeedExpanded ? "Show less ↑" : "Show all details →"}
+          </button>
+        </div>
       </div>
     </div>
   );

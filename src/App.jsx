@@ -8,7 +8,7 @@ import Profile from "./components/Profile Page/Profile";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const [activePage, setActivePage] = useState("main"); // ✅ "main" or "profile"
+  const [activePage, setActivePage] = useState("main"); // main, profile, connections, chat, ai
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -33,9 +33,9 @@ function App() {
     setUser(null);
   };
 
-  // ✅ Switch between Main and Profile pages
   const handleOpenProfile = () => setActivePage("profile");
   const handleBackToMain = () => setActivePage("main");
+  const handleNavigate = (page) => setActivePage(page); // ✅ receives from Topbar
 
   return (
     <div className="app-container">
@@ -51,7 +51,8 @@ function App() {
             <Main_front
               onLogout={handleLogout}
               user={user}
-              onOpenProfile={handleOpenProfile} // ✅ Open profile when icon clicked
+              onOpenProfile={handleOpenProfile}
+              onNavigate={handleNavigate} // ✅ pass navigation handler
             />
           )}
 
@@ -59,9 +60,15 @@ function App() {
             <Profile
               onLogout={handleLogout}
               user={user}
-              onBack={handleBackToMain} // ✅ Back to main feed
+              onBack={handleBackToMain} 
+              onNavigate={handleNavigate} // ✅ add this line
+
             />
           )}
+
+          {activePage === "connections" && <h1>Connections Page Coming Soon</h1>}
+          {activePage === "chat" && <h1>Chat Page Coming Soon</h1>}
+          {activePage === "ai" && <h1>Your AI Assistant Page Coming Soon</h1>}
         </>
       ) : (
         <Login onLoginSuccess={handleLoginSuccess} />

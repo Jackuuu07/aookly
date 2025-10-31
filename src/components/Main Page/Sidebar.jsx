@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   FiUsers,
   FiBriefcase,
@@ -21,7 +21,22 @@ const items = [
 
 const Sidebar = () => {
   // you can later make this stateful to track active item
-  const [active, setActive] = React.useState("networking");
+  const [active, setActive] = React.useState(null);
+  const sidebarRef = useRef(null);
+
+
+  // ✅ Click outside detection
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
+        setActive(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+
 
   return (
     <aside className="sidebar">
@@ -45,6 +60,7 @@ const Sidebar = () => {
       <nav className="sidebar-nav">
         {items.map((it) => (
           <button
+            ref={sidebarRef}
             key={it.key}
             className={`sidebar-item ${active === it.key ? "active" : ""}`}
             onClick={() => setActive(it.key)}
