@@ -5,6 +5,7 @@ import { GoDot } from "react-icons/go";
 import post1 from "../../assets/Post.png";
 import post2 from "../../assets/flag.jpg";
 import logo from "../../assets/exp-logo.jpg";
+import { useEffect } from "react";
 
 const ProfilePage = () => {
   const [isExpanded, setIsExpanded] = useState(false);       // About expand
@@ -55,15 +56,29 @@ const ProfilePage = () => {
     },
   ];
 
+   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
   const visiblePosts = isFeedExpanded ? feedPosts : feedPosts.slice(0, 2);
+
 
   return (
     <div className="profile-page">
+
+
       {/* ====================== Profile Header (Cover + Info) ====================== */}
       <div className="profile-header">
         <div className="profile-cover">
           <img
-            src="https://images.unsplash.com/photo-1503264116251-35a269479413"
+            src={
+              user?.cover_image
+                ? user.cover_image
+                : "https://images.unsplash.com/photo-1503264116251-35a269479413" // default fallback cover
+            }
             alt="cover"
             className="cover-img"
           />
@@ -72,20 +87,26 @@ const ProfilePage = () => {
         <div className="profile-info">
           <div className="profile-avatar">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+              src={
+                user?.profile_image
+                  ? user.profile_image
+                  : "https://cdn-icons-png.flaticon.com/512/149/149071.png" // fallback avatar
+              }
               alt="avatar"
             />
           </div>
-          <h2>Name</h2>
-          <p className="role">Software Developer</p>
-          <p className="desc">
-            Passionate software engineer focused on building responsive web
-            applications and scalable backend systems.
-          </p>
+
+          <h2>
+            {user
+              ? `${user.first_name || ""} ${user.last_name || ""}`.trim()
+              : "User Name"}
+          </h2>
+          <p className="role">{user?.profession || "Your Profession"}</p>
+          <p className="desc">{user?.tagline || "Your bio or tagline goes here."}</p>
 
           <div className="connections">
-            <span>10k followers</span>
-            <span>22 Professional connections</span>
+            <span>{user?.follower_count ?? 0} followers</span>
+            <span>{user?.connection_count ?? 0} Professional connections</span>
           </div>
 
           <div className="profile-actions">

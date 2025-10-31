@@ -162,9 +162,12 @@
   padding-top: 10px;
 }
 
+button.show-btn{
+    background: none;
+    border: none;
+}
+
 .show-btn {
-  background: none;
-  border: none;
   color: #0073b1;
   cursor: pointer;
   font-weight: 500;
